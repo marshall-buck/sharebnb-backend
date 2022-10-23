@@ -72,8 +72,9 @@ class Property {
 
     if (description) {
       vals.push(`%${description}%`);
-      whereParts.push(`description ILIKE $${vals.length}`);
+      whereParts.push(`description ILIKE $${vals.length} OR title ILIKE $${vals.length}`);
     }
+
 
     const where = (whereParts.length > 0) ?
       "WHERE " + whereParts.join(" AND ")
@@ -105,7 +106,7 @@ class Property {
     }
 
     const { where, vals } = this._filterWhereBuilder({
-      minPrice, maxPrice, description,
+      minPrice, maxPrice, description
     });
 
     const propertiesRes = await db.query(`
