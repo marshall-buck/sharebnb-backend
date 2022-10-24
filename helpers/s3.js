@@ -1,6 +1,6 @@
 "use strict";
 
-const { S3Client, GetObjectCommand } = require('@aws-sdk/client-s3');
+const { S3Client } = require('@aws-sdk/client-s3');
 const {
   BUCKET_NAME,
   ACCESS_KEY_ID,
