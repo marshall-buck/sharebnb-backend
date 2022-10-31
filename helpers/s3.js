@@ -1,46 +1,72 @@
 "use strict";
-const { S3Client } = require("@aws-sdk/client-s3");
 
+const { S3Client } = require('@aws-sdk/client-s3');
 const {
-  BUCKETEER_AWS_REGION,
-  BUCKETEER_BUCKET_NAME,
-  BUCKETEER_AWS_ACCESS_KEY_ID,
-  BUCKETEER_AWS_SECRET_ACCESS_KEY
+  BUCKET_NAME,
+  ACCESS_KEY_ID,
+  SECRET_ACCESS_KEY,
+  REGION,
 } = require('../config');
+const multer = require('multer');
+const multerS3 = require('multer-s3');
 
 const s3Client = new S3Client({
-  accessKeyId: process.env.BUCKETEER_AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.BUCKETEER_AWS_SECRET_ACCESS_KEY,
-  region: 'us-east-1',
+  region: REGION,
+  accessKeyId: ACCESS_KEY_ID,
+  secretAccessKey: SECRET_ACCESS_KEY,
 });
-
-
-const multer = require("multer");
-const multerS3 = require("multer-s3");
 
 /** multer upload function */
 const uploadImg = multer({
   storage: multerS3({
     s3: s3Client,
-    bucket: BUCKETEER_BUCKET_NAME,
+    bucket: BUCKET_NAME,
     metadata: function (req, file, cb) {
       cb(null, { fieldName: file.filename });
     },
     key: function (req, file, cb) {
-      cb(null, `public/${Date.now().toString()}`);
-    },
-  }),
+      cb(null, Date.now().toString());
+    }
+  })
 });
+
+
+// const getS3Img = async () => {
+//   const bucketParams = {
+//     Bucket: BUCKET_NAME,
+//     Key: "",
+//   };
+//   try {
+//     // Create a helper function to convert a ReadableStream to a string.
+//     const streamToString = (stream) =>
+//       new Promise((resolve, reject) => {
+//         const chunks = [];
+//         stream.on("data", (chunk) => chunks.push(chunk));
+//         stream.on("error", reject);
+//         stream.on("end", () => resolve(Buffer.concat(chunks).toString("utf8")));
+//       });
+//     // Get the object} from the Amazon S3 bucket. It is returned as a ReadableStream.
+//     const data = await s3Client.send(new GetObjectCommand(bucketParams));
+//     console.log(data);
+//     return data; // For unit tests.
+//     // Convert the ReadableStream to a string.
+//     // const bodyContents = await streamToString(data.Body);
+//     // console.log(bodyContents);
+//     //   return bodyContents;
+//   } catch (err) {
+//     console.log("Error", err);
+//   }
+// };
 
 /** Construct a object URL from s3 bucket parameters
  * returns a url string
  *
  * @example https://r27-sharebnb.s3.amazonaws.com/1663108593387
- */
+*/
 
 function getUrlFromBucket(key) {
-  return `https://${BUCKETEER_BUCKET_NAME}.s3.amazonaws.com/${key}`;
-}
+  return `https://${BUCKET_NAME}.s3.amazonaws.com/${key}`;
+};
 
 module.exports = {
   uploadImg,
