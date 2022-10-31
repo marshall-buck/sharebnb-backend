@@ -9,7 +9,7 @@ const s3Client = new S3Client({
 });
 
 const BUCKET_NAME = process.env.BUCKETEER_BUCKET_NAME;
-const AWS_BUCKET_NAME = "sharebb-r";
+// const AWS_BUCKET_NAME = "sharebb-r";
 
 // const {
 //   BUCKET_NAME,

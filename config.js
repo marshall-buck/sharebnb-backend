@@ -21,33 +21,33 @@ function getDatabaseUri() {
 const BCRYPT_WORK_FACTOR = process.env.NODE_ENV === "test" ? 1 : 12;
 
 // AWS S3 setup
-const REGION = process.env.REGION || "us-east-1";
-const BUCKET_NAME = process.env.BUCKET_NAME;
-const ACCESS_KEY_ID = process.env.ACCESS_KEY_ID;
-const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
+// const REGION = process.env.REGION || "us-east-1";
+// const BUCKET_NAME = process.env.BUCKET_NAME;
+// const ACCESS_KEY_ID = process.env.ACCESS_KEY_ID;
+// const SECRET_ACCESS_KEY = process.env.SECRET_ACCESS_KEY;
 
 // bucketeer configuration
 process.env.AWS_ACCESS_KEY_ID = process.env.BUCKETEER_AWS_ACCESS_KEY_ID;
 process.env.AWS_SECRET_ACCESS_KEY = process.env.BUCKETEER_AWS_SECRET_ACCESS_KEY;
 process.env.AWS_REGION = 'us-east-1';
 
+// module.exports = {
+//   SECRET_KEY,
+//   PORT,
+//   BCRYPT_WORK_FACTOR,
+//   getDatabaseUri,
+//   REGION,
+//   BUCKET_NAME,
+//   ACCESS_KEY_ID,
+//   SECRET_ACCESS_KEY,
+// };
 module.exports = {
   SECRET_KEY,
   PORT,
   BCRYPT_WORK_FACTOR,
   getDatabaseUri,
-  REGION,
-  BUCKET_NAME,
-  ACCESS_KEY_ID,
-  SECRET_ACCESS_KEY,
-};
-module.exports = {
-  SECRET_KEY,
-  PORT,
-  BCRYPT_WORK_FACTOR,
-  getDatabaseUri,
-  REGION,
-  BUCKET_NAME,
-  ACCESS_KEY_ID,
-  SECRET_ACCESS_KEY,
+  // REGION,
+  // BUCKET_NAME,
+  // ACCESS_KEY_ID,
+  // SECRET_ACCESS_KEY,
 };
