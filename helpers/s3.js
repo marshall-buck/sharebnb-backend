@@ -2,14 +2,14 @@
 
 // const AWS = require('aws-sdk');
 
-const { S3Client } = require("@aws-sdk/client-s3");
+
 const {
   BUCKETEER_AWS_ACCESS_KEY_ID,
   BUCKETEER_AWS_REGION,
   BUCKETEER_BUCKET_NAME,
   BUCKETEER_AWS_SECRET_ACCESS_KEY
 } = require('../config');
-
+const { S3Client } = require("@aws-sdk/client-s3");
 const s3Client = new S3Client({
   accessKeyId: BUCKETEER_AWS_ACCESS_KEY_ID,
   secretAccessKey: BUCKETEER_AWS_SECRET_ACCESS_KEY,
