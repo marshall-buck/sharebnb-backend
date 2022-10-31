@@ -9,22 +9,11 @@ const s3Client = new S3Client({
 });
 
 const BUCKET_NAME = process.env.BUCKETEER_BUCKET_NAME;
-// const AWS_BUCKET_NAME = "sharebb-r";
 
-// const {
-//   BUCKET_NAME,
-//   ACCESS_KEY_ID,
-//   SECRET_ACCESS_KEY,
-//   REGION,
-// } = require('../config');
 const multer = require("multer");
 const multerS3 = require("multer-s3");
 
-// const s3Client = new S3Client({
-//   region: REGION,
-//   accessKeyId: ACCESS_KEY_ID,
-//   secretAccessKey: SECRET_ACCESS_KEY,
-// });
+
 
 /** multer upload function */
 const uploadImg = multer({
