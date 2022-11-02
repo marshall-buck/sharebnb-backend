@@ -1,3 +1,9 @@
+DROP TABLE IF EXISTS images;
+DROP TABLE IF EXISTS messages;
+DROP TABLE IF EXISTS bookings;
+DROP TABLE IF EXISTS properties;
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE users (
   username VARCHAR(25) PRIMARY KEY,
   password TEXT NOT NULL,
