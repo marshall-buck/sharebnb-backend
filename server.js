@@ -1,8 +1,8 @@
 "use strict";
 
 const app = require("./app");
-const { PORT } = require("./config");
+const { PORT, HOSTNAME } = require("./config");
 
-app.listen(PORT, function () {
-  console.log(`Started on http://localhost:${PORT} this is from server.js`);
+app.listen(PORT, HOSTNAME, function () {
+  console.log(`Started on ${HOSTNAME}:${PORT} this is from server.js`);
 });
