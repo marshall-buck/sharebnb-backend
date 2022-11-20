@@ -27,7 +27,7 @@ const uploadImg = multer({
       cb(null, { fieldName: file.filename });
     },
     key: function (req, file, cb) {
-      cb(null, `${Date.now().toString()}`);
+      cb(null, `public/${Date.now().toString()}`);
     },
   }),
 });
