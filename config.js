@@ -8,9 +8,6 @@ const SECRET_KEY = process.env.SECRET_KEY || "secret-dev";
 
 const PORT = +process.env.PORT || 3001;
 
-const HOSTNAME =
-  process.env.HOSTNAME === "development" ? "127.0.0.1" : "0.0.0.0";
-
 // Use dev database, testing database, or via env var, production database
 function getDatabaseUri() {
   return process.env.NODE_ENV === "test"
@@ -37,5 +34,4 @@ module.exports = {
   AWS_SECRET_ACCESS_KEY,
   AWS_ACCESS_KEY_ID,
   AWS_REGION,
-  HOSTNAME,
 };
