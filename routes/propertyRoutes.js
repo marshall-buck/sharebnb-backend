@@ -14,10 +14,9 @@ const Image = require("../models/imageModel");
 const propertyNewSchema = require("../schemas/propertyNew.json");
 const propertySearchSchema = require("../schemas/propertySearch.json");
 
-const { uploadImg, getUrlFromBucket } = require('../helpers/s3');
+const { uploadImg, getUrlFromBucket } = require("../helpers/s3");
 
 const router = new express.Router();
-
 
 /** POST Create Property / { property } =>  { property }
  *
@@ -29,17 +28,13 @@ const router = new express.Router();
  */
 
 router.post("/", ensureLoggedIn, async function (req, res, next) {
-
   const newReqBody = { ...req.body, price: +req.body.price };
-  const validator = jsonschema.validate(
-    newReqBody,
-    propertyNewSchema,
-    { required: true }
-  );
-
+  const validator = jsonschema.validate(newReqBody, propertyNewSchema, {
+    required: true,
+  });
 
   if (!validator.valid) {
-    const errs = validator.errors.map(e => e.stack);
+    const errs = validator.errors.map((e) => e.stack);
     throw new BadRequestError(errs);
   }
 
@@ -67,13 +62,11 @@ router.get("/", async function (req, res, next) {
   if (q.minPrice !== undefined) q.minPrice = +q.minPrice;
   if (q.maxPrice !== undefined) q.maxPrice = +q.maxPrice;
 
-  const validator = jsonschema.validate(
-    q,
-    propertySearchSchema,
-    { required: true }
-  );
+  const validator = jsonschema.validate(q, propertySearchSchema, {
+    required: true,
+  });
   if (!validator.valid) {
-    const errs = validator.errors.map(e => e.stack);
+    const errs = validator.errors.map((e) => e.stack);
     throw new BadRequestError(errs);
   }
 
@@ -94,15 +87,16 @@ router.get("/:id", async function (req, res, next) {
   return res.json({ property });
 });
 
-
-
 /** POST {fileData, id: property.id}
  * - returns  Property: { id, title, address, description ,price, owner_username, images }
  *  where images is [{key, property_id}, ...]
-*/
+ */
 
-router.post('/images', uploadImg.array('photos', 3),
+router.post(
+  "/images",
+  uploadImg.array("photos", 3),
   async function (req, res, next) {
+    console.log(req.files);
     const id = req.body.id;
     const key = req.files[0].key;
     const imgUrl = getUrlFromBucket(key);
@@ -110,7 +104,8 @@ router.post('/images', uploadImg.array('photos', 3),
     await Image.create({ key: imgUrl, propertyId: id });
     const property = await Property.get(id);
     return res.json({ property });
-  });
+  }
+);
 
 /** POST /[username]/bookings/[id]  { state } => { application }
  *
@@ -119,23 +114,22 @@ router.post('/images', uploadImg.array('photos', 3),
  * Authorization required: same-user-as-:username
  * */
 
-router.post("/:id/bookings/", ensureLoggedIn,
-  async function (req, res, next) {
-    try {
-      const propertyId = +req.params.id;
-      const guestUsername = res.locals.user.username;
-      const { startDate, endDate } = req.body;
+router.post("/:id/bookings/", ensureLoggedIn, async function (req, res, next) {
+  try {
+    const propertyId = +req.params.id;
+    const guestUsername = res.locals.user.username;
+    const { startDate, endDate } = req.body;
 
-      const booking = await Booking.create({
-        startDate,
-        endDate,
-        propertyId,
-        guestUsername
-      });
-      return res.json({ booking });
-    } catch (err) {
-      return next(err);
-    }
-  });
+    const booking = await Booking.create({
+      startDate,
+      endDate,
+      propertyId,
+      guestUsername,
+    });
+    return res.json({ booking });
+  } catch (err) {
+    return next(err);
+  }
+});
 
 module.exports = router;

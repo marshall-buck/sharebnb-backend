@@ -3,7 +3,7 @@
 /** Express App for ShareBnB */
 const { NotFoundError } = require("./expressError");
 
-const express = require('express');
+const express = require("express");
 const cors = require("cors");
 const { authenticateJWT } = require("./middleware/authMiddleware");
 
@@ -23,10 +23,9 @@ app.use("/users", userRoutes);
 app.use("/properties", propertyRoutes);
 app.use("/messages", messageRoutes);
 
-
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
-  throw new NotFoundError();
+  throw new NotFoundError("404 ", req);
 });
 
 /** Generic error handler; anything unhandled goes here. */
