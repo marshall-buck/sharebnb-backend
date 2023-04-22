@@ -25,7 +25,7 @@ app.use("/messages", messageRoutes);
 
 /** Handle 404 errors -- this matches everything */
 app.use(function (req, res, next) {
-  throw new NotFoundError("404 ", req);
+  throw new NotFoundError(`req: ${req}, NorFoundError`);
 });
 
 /** Generic error handler; anything unhandled goes here. */
